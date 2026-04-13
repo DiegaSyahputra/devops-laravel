@@ -65,7 +65,7 @@ node {
             sh '''
             mkdir -p ~/.ssh
             chmod 700 ~/.ssh
-            ssh-keyscan -H 10.10.21.194 >> ~/.ssh/known_hosts
+            ssh-keyscan -H 172.24.1.153 >> ~/.ssh/known_hosts
 
             # Perubahan 1: Gunakan -rlptD (menghindari error set times/perms pada folder sistem)
             # Perubahan 2: Tambahkan --exclude untuk folder yang isinya dinamis di server
@@ -77,10 +77,10 @@ node {
             --exclude=.env \
             --exclude=storage/framework/views/* \
             --exclude=storage/logs/* \
-            ./ syahd@10.10.21.194:/home/syahd/laravel-app
+            ./ syahd@172.24.1.153:/home/syahd/laravel-app
 
             # Perubahan 3: Paksa perbaikan permission setelah rsync selesai
-            ssh syahd@10.10.21.194 "
+            ssh syahd@172.24.1.153 "
                 cd /home/syahd/laravel-app && \
                 chmod -R 775 storage bootstrap/cache && \
                 php artisan cache:clear || echo 'Artisan not found'
